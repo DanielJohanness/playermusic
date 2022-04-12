@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>custom music player</title>
+    <link rel="stylesheet" href="playermusic.css">
+</head>
+
+<body>
+    <div class="music">
+        <h2 class="title">Music Name</h2>
+        <div class="player">
+            <audio src=""></audio>
+            <div class="btns">
+                <span class="prev">
+                    <ion-icon name="rewind"></ion-icon>
+                </span>
+                <span class="playpause">
+                    <ion-icon name="play"></ion-icon>
+                </span>
+                <span class="next">
+                    <ion-icon name="fastforward"></ion-icon>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script>
+        const title = document.querySelector('.title')
+        const prev = document.querySelector('.prev')
+        const playpause = document.querySelector('.playpause')
+        const next = document.querySelector('.next')
+        const audio = document.querySelector('audio')
+
+        //pertama, membuat list music
+        const songlist = [{
+            path: "【FULL】【中日字幕】unlasting - 刀劍神域：Alicization War of Underworld - By LiSA (192  kbps).mp3",
+            songname: "unlasting by LISA",
+        }, {
+            path: "Yun_chi_-_Wonderful_Wonder_World_OST_Log_Horizon_ED-2_(mp3.pm).mp3",
+            songname: "Wonderful wonder world by Yun chi",
+        }, {
+            path: "[YumeOST] LiSA - ADAMAS.mp3",
+            songname: "ADAMAS by LISA",
+        }, {
+            path: "《配信限定》MACO - 24歳の私からママへ (Piano Ver.) -歌詞VIDEO-.mp3",
+            songname: "《配信限定》MACO",
+        }, ];
+        let song_playing = false;
+        //mulai music
+        function playsong() {
+            song_playing = true;
+            audio.play();
+            playpause.classList.add('active');
+            //ubah icon
+            playpause.innerHTML = '<ion-icon name="pause"></ion-icon>';
+        }
+        //pause music
+        function pausesong() {
+            song_playing = false;
+            audio.pause();
+            playpause.classList.remove('active');
+            //ubah icon
+            playpause.innerHTML = '<ion-icon name="play"></ion-icon>';
+        }
+        //play or pause on click music
+        playpause.addEventListener("click", () => (song_playing ? pausesong() : playsong()));
+        //memuat music 
+        function loadsong(songlist) {
+            title.textContent = songlist.songname;
+            audio.src = songlist.path;
+        }
+        //current song
+        let i = 0;
+        //on load - select first song from song list
+        loadsong(songlist[i])
+            //prev song
+        function PrevSong() {
+            i--;
+            if (1 < 0) {
+                i = songlist.length - 1;
+            }
+            loadsong(songlist[i]);
+            playsong();
+        }
+        prev.addEventListener("click", PrevSong);
+        //nextsong
+        function NextSong() {
+            i++;
+            if (1 > songlist.length - 1) {
+                i = 0;
+            }
+            loadsong(songlist[i]);
+            playsong();
+        }
+        next.addEventListener("click", NextSong);
+    </script>
+</body>
+
+</html>
